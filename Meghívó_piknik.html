@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Piknik Meghívó - Boríték</title>
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Merienda&display=swap" rel="stylesheet" />
+<style>
+    html, body {
+        background: linear-gradient(to bottom, #ffe6f0, #ffd6eb);
+    }
+  body {
+    margin-top: 5%;
+    margin-bottom: 10%;
+    padding: 0;
+    font-family: 'Pacifico', cursive;
+    color: #944b74;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    min-height: 100vh;
+  }
+
+  .envelope {
+    position: relative;
+    width: 90vw;
+    max-width: 420px;
+    background: #ffcae9;
+    border-radius: 0 0 20px 20px;
+    box-shadow: 0 4px 10px rgba(148, 75, 116, 0.3);
+    padding-bottom: 2rem;
+    overflow: visible;
+  }
+
+  /* Boríték teteje (háromszög) */
+  .envelope::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 50%;
+    transform: translateX(-50%);
+    width: 0; 
+    height: 0;
+    border-left: 210px solid transparent;
+    border-right: 210px solid transparent;
+    border-bottom: 90px solid #ffaad4;
+    border-radius: 20px 20px 0 0;
+    box-shadow: 0 3px 5px rgba(148, 75, 116, 0.2);
+    z-index: 2;
+  }
+
+  /* Masni a boríték tetején */
+  .bow {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 40px;
+    z-index: 3;
+    pointer-events: none;
+  }
+
+  /* Masni formák */
+  .bow::before, .bow::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    width: 35px;
+    height: 35px;
+    background: #ff85bb;
+    border-radius: 50% / 50% 50% 50% 50%;
+    box-shadow: 0 2px 6px rgba(255, 105, 180, 0.6);
+  }
+
+  .bow::before {
+    left: 0;
+    transform: translateY(-50%) rotate(-25deg);
+    clip-path: ellipse(60% 100% at 50% 50%);
+  }
+
+  .bow::after {
+    right: 0;
+    transform: translateY(-50%) rotate(25deg);
+    clip-path: ellipse(60% 100% at 50% 50%);
+  }
+
+  .bow span {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 20px;
+    height: 25px;
+    background: #ff3f91;
+    border-radius: 50% / 70% 70% 30% 30%;
+    box-shadow: 0 1px 4px rgba(255, 105, 180, 0.7);
+  }
+
+  /* Boríték oldali hajtások */
+  .envelope::after {
+    content: "";
+    position: absolute;
+    top: 70px;
+    left: 0;
+    width: 15px;
+    height: calc(100% - 70px);
+    background: repeating-linear-gradient(
+      45deg,
+      #ffa9d6,
+      #ffa9d6 3px,
+      #ffcae9 3px,
+      #ffcae9 6px
+    );
+    border-radius: 0 8px 8px 0;
+    box-shadow: inset 2px 0 5px rgba(255, 130, 190, 0.5);
+    z-index: 1;
+  }
+
+  .envelope .right-fold {
+    position: absolute;
+    top: 70px;
+    right: 0;
+    width: 15px;
+    height: calc(100% - 70px);
+    background: repeating-linear-gradient(
+      -45deg,
+      #ffa9d6,
+      #ffa9d6 3px,
+      #ffcae9 3px,
+      #ffcae9 6px
+    );
+    border-radius: 8px 0 0 8px;
+    box-shadow: inset -2px 0 5px rgba(255, 130, 190, 0.5);
+    z-index: 1;
+  }
+
+  .content {
+    padding: 3.5rem 3.5rem 3rem;
+    position: relative;
+    z-index: 5;
+    text-align: center;
+  }
+
+  h1 {
+    font-family: 'Great Vibes', cursive;
+    font-size: 3rem;
+    margin: 0 0 1.2rem;
+  }
+
+  p {
+    font-size: 1.15rem;
+    margin: 0.5rem 0 1.5rem;
+  }
+
+  .btn-group {
+    display: flex;
+    justify-content: center;
+    gap: 1.2rem;
+    margin-top: 1.5rem;
+  }
+
+  button {
+    font-family: 'Pacifica', cursive;
+    background-color: #ff90c2;
+    border: none;
+    border-radius: 25px;
+    padding: 0.75rem 2.5rem;
+    font-size: 1.1rem;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    box-shadow: 0 2px 6px rgba(255, 130, 190, 0.6);
+  }
+
+  button:hover {
+    background-color: #ff6aaf;
+  }
+
+  .response {
+    margin-top: 2rem;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #b34a7d;
+    animation: fadeIn 1s ease forwards;
+  }
+
+  .hidden {
+    display: none;
+  }
+
+  @keyframes fadeIn {
+    from {opacity: 0;}
+    to {opacity: 1;}
+  }
+
+  /* Csillám animáció */
+  .sparkle {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background: white;
+    border-radius: 50%;
+    box-shadow: 0 0 8px white;
+    animation: sparkle 6s linear infinite;
+    opacity: 0.8;
+  }
+
+  @keyframes sparkle {
+    0% {
+      transform: translateY(0) scale(1);
+      opacity: 0.8;
+    }
+    100% {
+      transform: translateY(100vh) scale(0.5);
+      opacity: 0;
+    }
+  }
+
+  /* Reszponzív kisebb képernyőn */
+  @media (max-width: 400px) {
+    .envelope::before {
+      border-left: 40vw solid transparent;
+      border-right: 40vw solid transparent;
+      border-bottom: 18vw solid #ffaad4;
+    }
+
+    .bow {
+      width: 50px;
+      height: 25px;
+      top: 10px;
+    }
+
+    .bow::before, .bow::after {
+      width: 20px;
+      height: 20px;
+    }
+
+    .bow span {
+      width: 12px;
+      height: 15px;
+    }
+
+    .content {
+      padding: 4rem 2rem 2rem;
+    }
+
+    h1 {
+      font-size: 2.2rem;
+    }
+
+    p {
+      font-size: 1rem;
+    }
+
+    button {
+      padding: 0.6rem 1.8rem;
+      font-size: 1rem;
+    }
+  }
+</style>
+</head>
+<body>
+
+<div class="envelope">
+  <div class="bow"><span></span></div>
+  <div class="content">
+    <h1>Meghívó egy varázslatos piknikre</h1>
+    <p>Kedves <strong>Rebibaba</strong>,<br />
+    Szeretnélek meghívni egy különleges, csak kettes piknikre a születésnapod alkalmából! 🎀</p>
+    <p>Elfogadod a meghívást?</p>
+
+    <div class="btn-group">
+      <button id="acceptBtn"><strong><i>Elfogadom</i></strong></button>
+      <button id="declineBtn"><strong><i>Nem tudok menni</i></strong></button>
+    </div>
+
+    <div id="responseMsg" class="response hidden"></div>
+  </div>
+</div>
+ 
+<script>
+  // Csillámokat generálunk
+  for(let i=0; i<40; i++){
+    let sparkle = document.createElement('div');
+    sparkle.classList.add('sparkle');
+    sparkle.style.left = Math.random() * 100 + 'vw';
+    sparkle.style.top = Math.random() * 100 + 'vh';
+    sparkle.style.animationDuration = (4 + Math.random() * 4) + 's';
+    sparkle.style.animationDelay = (Math.random() * 6) + 's';
+    document.body.appendChild(sparkle);
+  }
+
+  const acceptBtn = document.getElementById('acceptBtn');
+  const declineBtn = document.getElementById('declineBtn');
+  const responseMsg = document.getElementById('responseMsg');
+
+  acceptBtn.addEventListener('click', () => {
+    responseMsg.classList.remove('hidden');
+    responseMsg.innerHTML = `
+  <div style="font-size: 1rem; line-height: 1.8;">
+    🌸 <strong style="font-size: 1.4rem;">Helyes válasz!</strong> 🌸<br/><br/>
+
+    <strong>⏰ Időpont:</strong><br/>
+    <span style="display: inline-block; margin-left: 0.5rem;">
+      2025. június 15. (vasárnap) délután 16:00
+    </span><br/><br/>
+
+    <strong>📍 Helyszín:</strong><br/>
+    <span style="display: inline-block; margin-left: 0.5rem;">
+      Budatétényi rózsakert
+    </span><br/><br/>
+
+    <em style="display: inline-block; margin-top: 1rem;">
+      Készülök takaróval, és sok finomsággal!<br/>
+      Hozz magaddal sok dumcsi témát, hihi!<br/>
+      Love u! 💗
+    </em>
+  </div>
+`;
+
+  });
+
+  declineBtn.addEventListener('click', () => {
+  alert('❌ Hiba: Ez az opció nem elérhető... 🥲');
+  responseMsg.classList.remove('hidden');
+  responseMsg.textContent = 'Nice try 😏 De te is tudod, hogy ezt nem lehet visszautasítani! Találkozunk a pikniken! 🌸';
+});
+
+</script>
+
+</body>
+</html>
