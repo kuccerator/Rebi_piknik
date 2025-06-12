@@ -5,17 +5,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Piknik Meghívó - Boríték</title>
 <link href="https://fonts.googleapis.com/css2?family=Merienda&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Merienda&display=swap" rel="stylesheet" />
 <style>
   html, body {
-    background: linear-gradient(to bottom, #ffe6f0, #ffd6eb);
+    background: linear-gradient(to bottom, #f9e6e7, #d9a1a6);
   }
 
   body {
-    margin-top: 5%;
-    margin-bottom: 10%;
     padding: 0;
     font-family: 'Merienda', sans-serif;
-    color: #944b74;
+    color: #6b2e3a;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -27,11 +26,13 @@
     position: relative;
     width: 90vw;
     max-width: 420px;
-    background: #ffcae9;
+    background: #b86b75;
     border-radius: 0 0 20px 20px;
-    box-shadow: 0 4px 10px rgba(148, 75, 116, 0.3);
+    box-shadow: 0 4px 10px rgba(107, 46, 58, 0.3);
     padding-bottom: 2rem;
     overflow: visible;
+    margin-top: 5%;
+    margin-bottom: 10%;
   }
 
   .envelope-top {
@@ -42,12 +43,12 @@
     height: 0;
     border-left: 210px solid transparent;
     border-right: 210px solid transparent;
-    border-bottom: 90px solid #ffaad4;
+    border-bottom: 90px solid #a94f57;
     border-radius: 20px 20px 0 0;
-    box-shadow: 0 3px 5px rgba(148, 75, 116, 0.2);
+    box-shadow: 0 3px 5px rgba(107, 46, 58, 0.2);
     z-index: 2;
     transform-origin: top center;
-    transition: transform 1.2s ease-in-out;
+    transition: transform 1.2s cubic-bezier(0.68, -0.55, 0.27, 1.55);
   }
 
   .open .envelope-top {
@@ -71,9 +72,9 @@
     top: 50%;
     width: 35px;
     height: 35px;
-    background: #ff85bb;
+    background: #a64f5a;
     border-radius: 50% / 50% 50% 50% 50%;
-    box-shadow: 0 2px 6px rgba(255, 105, 180, 0.6);
+    box-shadow: 0 2px 6px rgba(166, 79, 90, 0.6);
   }
 
   .bow::before {
@@ -95,9 +96,9 @@
     transform: translate(-50%, -50%);
     width: 20px;
     height: 25px;
-    background: #ff3f91;
+    background: #7a2f3a;
     border-radius: 50% / 70% 70% 30% 30%;
-    box-shadow: 0 1px 4px rgba(255, 105, 180, 0.7);
+    box-shadow: 0 1px 4px rgba(122, 47, 58, 0.7);
   }
 
   .envelope::after {
@@ -107,15 +108,8 @@
     left: 0;
     width: 15px;
     height: calc(100% - 70px);
-    background: repeating-linear-gradient(
-      45deg,
-      #ffa9d6,
-      #ffa9d6 3px,
-      #ffcae9 3px,
-      #ffcae9 6px
-    );
     border-radius: 0 8px 8px 0;
-    box-shadow: inset 2px 0 5px rgba(255, 130, 190, 0.5);
+    box-shadow: inset 2px 0 5px rgba(186, 107, 117, 0.5);
     z-index: 1;
   }
 
@@ -125,15 +119,8 @@
     right: 0;
     width: 15px;
     height: calc(100% - 70px);
-    background: repeating-linear-gradient(
-      -45deg,
-      #ffa9d6,
-      #ffa9d6 3px,
-      #ffcae9 3px,
-      #ffcae9 6px
-    );
     border-radius: 8px 0 0 8px;
-    box-shadow: inset -2px 0 5px rgba(255, 130, 190, 0.5);
+    box-shadow: inset -2px 0 5px rgba(186, 107, 117, 0.5);
     z-index: 1;
   }
 
@@ -154,7 +141,7 @@
   }
 
   h1 {
-    font-family: 'Merienda', sans-serif;
+    font-family: 'Great Vibes', cursive;
     font-size: 3rem;
     margin: 0 0 1.2rem;
   }
@@ -173,7 +160,7 @@
 
   button {
     font-family: 'Merienda', sans-serif;
-    background-color: #ff90c2;
+    background-color: #7a2f3a;
     border: none;
     border-radius: 25px;
     padding: 0.75rem 2.5rem;
@@ -181,46 +168,51 @@
     color: white;
     cursor: pointer;
     transition: background-color 0.3s ease;
-    box-shadow: 0 2px 6px rgba(255, 130, 190, 0.6);
+    box-shadow: 0 2px 6px rgba(122, 47, 58, 0.6);
   }
 
   button:hover {
-    background-color: #ff6aaf;
+    background-color: #5e2430;
   }
 
   .response {
     margin-top: 2rem;
     font-size: 1.2rem;
     font-weight: 600;
-    color: #b34a7d;
+    color: black;
   }
 
   @keyframes fadeIn {
-    from {opacity: 0;}
-    to {opacity: 1;}
-  }
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+    }
+    .content.fade-in {
+    display: block;
+    animation: fadeIn 1.5s ease-out forwards;
+    }
 
   .sparkle {
     position: absolute;
     width: 8px;
     height: 8px;
-    background: white;
+    background: #c48a8e;
     border-radius: 50%;
-    box-shadow: 0 0 8px white;
-    animation: sparkle 6s linear infinite;
-    opacity: 0.8;
+    box-shadow: 0 0 8px #c48a8e;
+    opacity: 0.5;
+    animation: sparkle 8s ease-in-out infinite;
   }
 
   @keyframes sparkle {
-    0% { transform: translateY(0) scale(1); opacity: 0.8; }
-    100% { transform: translateY(100vh) scale(0.5); opacity: 0; }
+    0% { transform: translateY(0) scale(1) rotate(0deg); opacity: 0.7; }
+    50% { transform: translateY(40vh) scale(0.6) rotate(180deg); opacity: 0.4; }
+    100% { transform: translateY(80vh) scale(0.3) rotate(360deg); opacity: 0; }
   }
 
   @media (max-width: 400px) {
     .envelope-top {
       border-left: 40vw solid transparent;
       border-right: 40vw solid transparent;
-      border-bottom: 18vw solid #ffaad4;
+      border-bottom: 18vw solid #a94f57;
     }
 
     .bow {
@@ -280,14 +272,19 @@
 
 <script>
   // Csillámok
-  for(let i=0; i<40; i++){
-    let sparkle = document.createElement('div');
-    sparkle.classList.add('sparkle');
-    sparkle.style.left = Math.random() * 100 + 'vw';
-    sparkle.style.top = Math.random() * 100 + 'vh';
-    sparkle.style.animationDuration = (4 + Math.random() * 4) + 's';
-    sparkle.style.animationDelay = (Math.random() * 6) + 's';
-    document.body.appendChild(sparkle);
+
+  const sparkleColors = ['#c48a8e', '#b36a6f', '#d1a1a5', '#f0d7d9'];
+
+  for(let i = 0; i < 40; i++) {
+      let sparkle = document.createElement('div');
+      sparkle.classList.add('sparkle');
+      sparkle.style.left = Math.random() * 100 + 'vw';
+      sparkle.style.top = Math.random() * 100 + 'vh';
+      sparkle.style.background = sparkleColors[Math.floor(Math.random() * sparkleColors.length)];
+      sparkle.style.animationDuration = (7 + Math.random() * 4) + 's';
+      sparkle.style.animationDelay = (Math.random() * 6) + 's';
+      sparkle.style.opacity = 0.4 + Math.random() * 0.3;
+      document.body.appendChild(sparkle);
   }
 
   // Kibontás animáció
@@ -313,7 +310,7 @@
     responseMsg.classList.remove('hidden');
     responseMsg.innerHTML = `
       <div style="font-size: 1rem; line-height: 1.8;">
-        🌸 <strong style="font-size: 1.4rem;">Helyes válasz!</strong> 🌸<br/><br/>
+        🌹 <strong style="font-size: 1.4rem;">Helyes válasz!</strong> 🌹<br/><br/>
         <strong>⏰ Időpont:</strong><br/>
         <span style="display: inline-block; margin-left: 0.5rem;">
           2025. június 15. (vasárnap) délután 16:00
