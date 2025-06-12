@@ -4,16 +4,17 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Piknik Meghívó - Boríték</title>
-<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Merienda&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Merienda&display=swap" rel="stylesheet" />
 <style>
-    html, body {
-        background: linear-gradient(to bottom, #ffe6f0, #ffd6eb);
-    }
+  html, body {
+    background: linear-gradient(to bottom, #ffe6f0, #ffd6eb);
+  }
+
   body {
     margin-top: 5%;
     margin-bottom: 10%;
     padding: 0;
-    font-family: 'Pacifico', cursive;
+    font-family: 'Merienda', sans-serif;
     color: #944b74;
     display: flex;
     justify-content: center;
@@ -33,13 +34,11 @@
     overflow: visible;
   }
 
-  /* Boríték teteje (háromszög) */
-  .envelope::before {
-    content: "";
+  .envelope-top {
     position: absolute;
     top: 0; left: 50%;
     transform: translateX(-50%);
-    width: 0; 
+    width: 0;
     height: 0;
     border-left: 210px solid transparent;
     border-right: 210px solid transparent;
@@ -47,9 +46,14 @@
     border-radius: 20px 20px 0 0;
     box-shadow: 0 3px 5px rgba(148, 75, 116, 0.2);
     z-index: 2;
+    transform-origin: top center;
+    transition: transform 1.2s ease-in-out;
   }
 
-  /* Masni a boríték tetején */
+  .open .envelope-top {
+    transform: translateX(-50%) rotateX(120deg);
+  }
+
   .bow {
     position: absolute;
     top: 20px;
@@ -61,7 +65,6 @@
     pointer-events: none;
   }
 
-  /* Masni formák */
   .bow::before, .bow::after {
     content: "";
     position: absolute;
@@ -97,7 +100,6 @@
     box-shadow: 0 1px 4px rgba(255, 105, 180, 0.7);
   }
 
-  /* Boríték oldali hajtások */
   .envelope::after {
     content: "";
     position: absolute;
@@ -142,8 +144,17 @@
     text-align: center;
   }
 
+  .content.hidden {
+    display: none;
+  }
+
+  .content.fade-in {
+    display: block;
+    animation: fadeIn 1s ease forwards;
+  }
+
   h1 {
-    font-family: 'Great Vibes', cursive;
+    font-family: 'Merienda', sans-serif;
     font-size: 3rem;
     margin: 0 0 1.2rem;
   }
@@ -161,7 +172,7 @@
   }
 
   button {
-    font-family: 'Pacifica', cursive;
+    font-family: 'Merienda', sans-serif;
     background-color: #ff90c2;
     border: none;
     border-radius: 25px;
@@ -182,11 +193,6 @@
     font-size: 1.2rem;
     font-weight: 600;
     color: #b34a7d;
-    animation: fadeIn 1s ease forwards;
-  }
-
-  .hidden {
-    display: none;
   }
 
   @keyframes fadeIn {
@@ -194,7 +200,6 @@
     to {opacity: 1;}
   }
 
-  /* Csillám animáció */
   .sparkle {
     position: absolute;
     width: 8px;
@@ -207,19 +212,12 @@
   }
 
   @keyframes sparkle {
-    0% {
-      transform: translateY(0) scale(1);
-      opacity: 0.8;
-    }
-    100% {
-      transform: translateY(100vh) scale(0.5);
-      opacity: 0;
-    }
+    0% { transform: translateY(0) scale(1); opacity: 0.8; }
+    100% { transform: translateY(100vh) scale(0.5); opacity: 0; }
   }
 
-  /* Reszponzív kisebb képernyőn */
   @media (max-width: 400px) {
-    .envelope::before {
+    .envelope-top {
       border-left: 40vw solid transparent;
       border-right: 40vw solid transparent;
       border-bottom: 18vw solid #ffaad4;
@@ -263,24 +261,25 @@
 <body>
 
 <div class="envelope">
+  <div class="envelope-top"></div>
   <div class="bow"><span></span></div>
-  <div class="content">
+  <div class="content hidden">
     <h1>Meghívó egy varázslatos piknikre</h1>
     <p>Kedves <strong>Rebibaba</strong>,<br />
     Szeretnélek meghívni egy különleges, csak kettes piknikre a születésnapod alkalmából! 🎀</p>
     <p>Elfogadod a meghívást?</p>
 
     <div class="btn-group">
-      <button id="acceptBtn"><strong><i>Elfogadom</i></strong></button>
-      <button id="declineBtn"><strong><i>Nem tudok menni</i></strong></button>
+      <button id="acceptBtn"><strong>Elfogadom</strong></button>
+      <button id="declineBtn"><strong>Nem tudok menni</strong></button>
     </div>
 
     <div id="responseMsg" class="response hidden"></div>
   </div>
 </div>
- 
+
 <script>
-  // Csillámokat generálunk
+  // Csillámok
   for(let i=0; i<40; i++){
     let sparkle = document.createElement('div');
     sparkle.classList.add('sparkle');
@@ -291,6 +290,21 @@
     document.body.appendChild(sparkle);
   }
 
+  // Kibontás animáció
+  window.onload = function() {
+    const envelope = document.querySelector('.envelope');
+    const content = document.querySelector('.content');
+
+    setTimeout(() => {
+      envelope.classList.add('open');
+    }, 100);
+
+    setTimeout(() => {
+      content.classList.remove('hidden');
+      content.classList.add('fade-in');
+    }, 1400);
+  };
+
   const acceptBtn = document.getElementById('acceptBtn');
   const declineBtn = document.getElementById('declineBtn');
   const responseMsg = document.getElementById('responseMsg');
@@ -298,35 +312,29 @@
   acceptBtn.addEventListener('click', () => {
     responseMsg.classList.remove('hidden');
     responseMsg.innerHTML = `
-  <div style="font-size: 1rem; line-height: 1.8;">
-    🌸 <strong style="font-size: 1.4rem;">Helyes válasz!</strong> 🌸<br/><br/>
-
-    <strong>⏰ Időpont:</strong><br/>
-    <span style="display: inline-block; margin-left: 0.5rem;">
-      2025. június 15. (vasárnap) délután 16:00
-    </span><br/><br/>
-
-    <strong>📍 Helyszín:</strong><br/>
-    <span style="display: inline-block; margin-left: 0.5rem;">
-      Budatétényi rózsakert
-    </span><br/><br/>
-
-    <em style="display: inline-block; margin-top: 1rem;">
-      Készülök takaróval, és sok finomsággal!<br/>
-      Hozz magaddal sok dumcsi témát, hihi!<br/>
-      Love u! 💗
-    </em>
-  </div>
-`;
-
+      <div style="font-size: 1rem; line-height: 1.8;">
+        🌸 <strong style="font-size: 1.4rem;">Helyes válasz!</strong> 🌸<br/><br/>
+        <strong>⏰ Időpont:</strong><br/>
+        <span style="display: inline-block; margin-left: 0.5rem;">
+          2025. június 15. (vasárnap) délután 16:00
+        </span><br/><br/>
+        <strong>📍 Helyszín:</strong><br/>
+        <span style="display: inline-block; margin-left: 0.5rem;">
+          Budatétényi rózsakert
+        </span><br/><br/>
+        <em style="display: inline-block; margin-top: 1rem;">
+          Készülök takaróval, és sok finomsággal!<br/>
+          Hozz magaddal sok dumcsi témát, hihi!<br/>
+          Love u! 💗
+        </em>
+      </div>`;
   });
 
   declineBtn.addEventListener('click', () => {
-  alert('❌ Hiba: Ez az opció nem elérhető... 🥲');
-  responseMsg.classList.remove('hidden');
-  responseMsg.textContent = 'Nice try 😏 De te is tudod, hogy ezt nem lehet visszautasítani! Találkozunk a pikniken! 🌸';
-});
-
+    alert('❌ Hiba: Ez az opció nem elérhető... 🥲');
+    responseMsg.classList.remove('hidden');
+    responseMsg.textContent = 'Nice try 😏 De te is tudod, hogy ezt nem lehet visszautasítani! Találkozunk a pikniken! 🌸';
+  });
 </script>
 
 </body>
